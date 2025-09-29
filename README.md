@@ -1,8 +1,11 @@
 # Project 1 - Week 3
 
-Please refer to the instructions on the website for how to complete week 3. In general,
-you should not need to modify any of the modules. Just focus on completing the week3.nf
-by correctly linking the outputs of processes to the next. 
+## Report
+- **Notebook:** `report_project1_final.ipynb`  
+- **HTML:** `report_project1_final.html`  
+(Moved to repo root so they are tracked in Git.)
 
-You are of course welcome to alter the inputs / outputs, but you will need to then ensure
-that you are passing the correct channels to different processes. 
+## Changes made
+- Adjusted **Flye process** (`modules/flye/main.nf`) for faster runtime on SCC.  
+- Updated **Prokka process** (`modules/prokka/main.nf`) to ensure stable GFF output path.  
+- Minor fixes in **week3.nf** and `nextflow.config` for channel wiring and resource use.
