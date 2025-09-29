@@ -75,5 +75,30 @@ workflow {
 
     // Run BUSCO PLOT on the BUSCO output
     
+    // ===== Week 3 wiring =====
+
+    // Polished assembly fasta from Week 2
+    polished_asm = PILON.out       // if your PILON emits a named tuple, use PILON.out.polished instead
+
+    // 1) Annotate the polished assembly using Prokka
+    PROKKA(polished_asm)           // if PROKKA expects (val name, path fa), do: polished_asm.map{ fa-> tuple("sample", fa) }
+
+    // 2) Run BUSCO on the polished assembly
+    BUSCO(polished_asm)            // likewise, wrap name if BUSCO expects (val name, path fa)
+
+    // 3) Download the canonical reference genome (expects a single val input)
+    ref_acc_ch = Channel.value(params.ref_genome)
+    NCBI_DATASETS(ref_acc_ch)
+    ref_fa = NCBI_DATASETS.out   // emits 'dataset/**/*.fna'
+
+    // 4) QUAST comparing the final (polished) assembly with the reference genome
+    QUAST(polished_asm, ref_fa)    // if QUAST expects named tuples, wrap both with tuples("sample", path)
+
+    // 5) QUAST on the unpolished (Flye) assembly
+    QUAST_UNPOLISHED(FLYE.out, ref_fa)
+
+    // 6) BUSCO PLOT from BUSCO outputs
+    BUSCO_PLOT(BUSCO.out)
+    // ===== end Week 3 wiring =====
     
 }

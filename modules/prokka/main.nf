@@ -1,7 +1,7 @@
 #!/usr/bin/env nextflow
 
 process PROKKA {
-    label 'process_single'
+    label 'process_medium'
     conda "envs/prokka_env.yml"
     publishDir params.outdir
 
